@@ -132,5 +132,42 @@ cat3.products.create!({
   price: 2_483.75
 })
 
+#User.destroy_all
+user_patate = User.new(name: "Patate", email: "patate@test.com", password_digest: "p")
+user_patate.save
+user_bob = User.new(name: "bob", email: "bob@b.com", password_digest: "b")
+user_bob.save
+user_mia = User.new(name: "mia", email: "mia@b.com", password_digest: "m")
+user_mia.save
+product2 = Product.find_by! id: 2
+product3 = Product.find_by! id: 3
+#user1 = User.find_by! email: "patate@test.ca"
+
+product2.review.create!({
+  description: "wow",
+  rating: 3,
+  user_id: user_patate.id
+})
+
+product2.review.create!({
+  description: "bob cool",
+  rating: 5,
+  user_id: user_bob.id
+})
+product3.review.create!({
+  description: "bob cool",
+  rating: 3,
+  user_id: user_bob.id
+})
+product3.review.create!({
+  description: "wow cool",
+  rating: 2,
+  user_id: user_patate.id
+})
+product3.review.create!({
+  description: "MALADE!",
+  rating: 2,
+  user_id: user_mia.id
+})
 
 puts "DONE!"
