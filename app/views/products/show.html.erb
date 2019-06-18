@@ -1,3 +1,5 @@
+
+
 <section class="products-show">
 
   <header class="page-header">
@@ -22,8 +24,27 @@
           <dd><%= @product.quantity %></dd>
           <dt>Price</dt>
           <dd><%= @product.price %></dd>
+          <% if review = Review.all%>
+          <dt>Rating</dt>
+          <%console%>
+          <dd><%= @product.reviews.average(:rating).round(2) %></dd>
+          <% end %>
         </dl>
       </div>
+      <div class="col-sm-4">
+      <dl>
+        <%= form_for [@product, @review] do |form| %>
+          <dt><%= form.label "My rating" %>
+          <%= form.select(:rating) do %>
+            <% [['1', 1], ['2', 2],['3', 3], ['4', 4], ['5', 5]].each do |c| -%>
+              <%= content_tag(:option, c.first, value: c.last) %>
+            <% end %>
+          <% end %></dt>
+          <dt><%= form.label :description %></dt>
+          <dd><%= form.text_field :description, class: 'form-control' %></dd>
+        <%= form.submit 'Send the rating', class: 'btn btn-primary' %>
+      <% end %>
+      </dl>
     </div>
 
   </article>
